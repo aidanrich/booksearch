@@ -33,9 +33,9 @@ const typeDefs = gql`
     addUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
 
-    addSkill(profileId: ID!, skill: String!): Profile
-    removeProfile: Profile
-    removeSkill(skill: String!): Profile
+    addBook(userId: ID!, authors: String, description: String!, bookId: String!, imnage: String, link: String!, title: String!): User
+    removeUser: User
+    removeBook(title: String!): User
   }
 `;
 
