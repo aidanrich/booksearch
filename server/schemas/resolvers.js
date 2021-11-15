@@ -4,9 +4,9 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    // user: async () => {
-    //   return User.find();
-    // },
+    users: async () => {
+      return User.find();
+    },
 
     user: async (parent, { userId }) => {
       return User.findOne({ _id: userId });
@@ -45,7 +45,7 @@ const resolvers = {
     },
 
     // Add a third argument to the resolver to access data in our `context`
-    addSkill: async (parent, { userId, book }, context) => {
+    addBook: async (parent, { userId, book }, context) => {
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       if (context.user) {
         return User.findOneAndUpdate(
