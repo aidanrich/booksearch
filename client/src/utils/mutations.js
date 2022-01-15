@@ -36,7 +36,6 @@ export const ADD_BOOK = gql`
             bookId
             image
             link
-
       }
     }
   }
