@@ -30,7 +30,7 @@ export const ADD_BOOK = gql`
       _id
       username
       savedBooks {
-        authors
+            authors
             description
             title
             bookId
@@ -41,3 +41,18 @@ export const ADD_BOOK = gql`
   }
 `;
 
+export const REMOVE_BOOK = gql`
+mutation removeBook( $bookId: String! ){
+        removeBook( bookId: $bookId ){
+            username
+            savedBooks{
+                authors
+                description
+                title
+                bookId
+                image
+                link
+            }
+        }
+    }
+`;
