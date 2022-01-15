@@ -71,8 +71,7 @@ const SearchBooks = () => {
       const response = await addBook(
         {
           variables: {
-            userId: 
-            bookToSave
+            ...bookToSave
 
           }
         }
