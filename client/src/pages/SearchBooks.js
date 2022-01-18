@@ -18,9 +18,8 @@ const SearchBooks = () => {
   const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
   const myBooks = dataMe?.me || {};
   // const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
-  console.log(myBooks)
+  // console.log(myBooks)
  
-  let disable = true
 
 
   const [ addBook, {data, loading, error} ] = useMutation(ADD_BOOK);
@@ -62,6 +61,7 @@ const SearchBooks = () => {
     } catch (err) {
       console.error(err);
     }
+
   };
 
   // create function to handle saving a book to our database
@@ -96,6 +96,15 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
+
+  let disable = false;
+
+  // if (myBooks.savedBooks?.find(book => book.bookId === searchedBooks.bookId)) {
+  //   disable = true;
+  //   console.log(disable)
+  // }
+  // console.log(myBooks.savedBooks, searchedBooks)
+
 
   return (
     <>
@@ -143,10 +152,10 @@ const SearchBooks = () => {
                   <Card.Text>{book.description}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={myBooks.savedBooks?.includes(book.bookId)}
+                      disabled={disable}
                       className='btn-block btn-info'
                       onClick={() => handleSaveBook(book.bookId)}>
-                      {myBooks.savedBooks?.includes(book.bookId)
+                      {disable
                         ? 'This book has already been saved!'
                         : 'Save this Book!'}
                     </Button>
