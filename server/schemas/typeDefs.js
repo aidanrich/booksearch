@@ -20,12 +20,15 @@ const typeDefs = gql`
     image: String
     link: String
     title: String
+    bookOwner: String
+    owned: Boolean
   }
 
   type Query {
     users: [User]!
     user(userId: ID!): User
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
+    myBooks(bookOwner: String): [Book]
     me: User
     myBooks(bookId: [String]): User
   }
