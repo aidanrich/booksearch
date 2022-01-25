@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_ME, QUERY_MYBOOKS } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import { useQuery, useMutation } from '@apollo/client';
 import Auth from '../utils/auth';

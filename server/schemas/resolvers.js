@@ -50,24 +50,31 @@ const resolvers = {
       return { token, user };
     },
 
-    // Add a third argument to the resolver to access data in our `context`
-    addBook: async (parent, args, context) => {
-      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
-      if (context.user) {
-        const updateBook = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          {
-            $push: { savedBooks: args },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        return updateBook
-      }
-      // If user attempts to execute this mutation and isn't logged in, throw an error
-      throw new AuthenticationError('You need to be logged in!');
+    // OLD ADD BOOK FROM WHEN BOOK WAS A SUBDOCUMENT
+
+    // // Add a third argument to the resolver to access data in our `context`
+    // addBook: async (parent, args, context) => {
+    //   // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+    //   if (context.user) {
+    //     const updateBook = await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       {
+    //         $push: { savedBooks: args },
+    //       },
+    //       {
+    //         new: true,
+    //         runValidators: true,
+    //       }
+    //     );
+    //     return updateBook
+    //   }
+    //   // If user attempts to execute this mutation and isn't logged in, throw an error
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+
+    addBook: async (parent, { bookId, authors, description, image, link, title, bookOwner }) => {
+      const book = await Book.create({ bookId, authors, description, image, link, title, bookOwner });
+      return book;
     },
 
     // Set up mutation so a logged in user can only remove their profile and no one else's
