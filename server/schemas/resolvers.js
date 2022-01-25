@@ -17,13 +17,13 @@ const resolvers = {
       return await Book.findById({bookOwner: bookOwner });
     },
 
-    me: async (parent, args, context) => {
-      if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select('-__v -password')
-        return userData;
-      }
-      throw new AuthenticationError('You need to be logged in!');
-    },
+    // me: async (parent, args, context) => {
+    //   if (context.user) {
+    //     const userData = await User.findOne({ _id: context.user._id }).select('-__v -password')
+    //     return userData;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
   },
 
   Mutation: {

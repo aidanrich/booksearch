@@ -16,7 +16,7 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   
   const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
-  const myBooks = dataMe?.me || {};
+  // const myBooks = dataMe?.me || {};
   // const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   // console.log(myBooks)
  
@@ -27,9 +27,9 @@ const SearchBooks = () => {
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
 
-  useEffect(() => {
-    return () => myBooks;
-  });
+  // useEffect(() => {
+  //   return () => myBooks;
+  // });
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -80,7 +80,8 @@ const SearchBooks = () => {
       const response = await addBook(
         {
           variables: {
-            ...bookToSave
+            ...bookToSave,
+            bookOwner: Auth.getProfile().data.username,
 
           }
         }

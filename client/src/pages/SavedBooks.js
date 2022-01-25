@@ -9,7 +9,7 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const myBooks = data?.me || {};
+  const bookMap = data?.me || {};
 
   const [removeBook, {error}] = useMutation(REMOVE_BOOK);
   console.log(data)
@@ -51,17 +51,17 @@ const SavedBooks = () => {
     <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>{`Viewing ${myBooks.username}'s saved books!`}</h1>
+          <h1>{`Viewing ${bookMap.username}'s saved books!`}</h1>
         </Container>
       </Jumbotron>
       <Container>
         <h2>
-          {myBooks.savedBooks.length
-            ? `Viewing  ${myBooks.savedBooks.length} saved ${myBooks.savedBooks.length === 1 ? 'book' : 'books'}:`
+          {bookMap.savedBooks.length
+            ? `Viewing  ${bookMap.savedBooks.length} saved ${bookMap.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
         </h2>
         <CardColumns>
-          {!loading && myBooks.savedBooks.map((book) => {
+          {!loading && bookMap.savedBooks.map((book) => {
             return (
               <Card key={book.bookId} border='dark'>
                 {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}

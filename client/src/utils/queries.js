@@ -11,7 +11,7 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_MYBOOKS = gql`
-  query myBooks($bookOwner: String) {
+  query my($bookOwner: String) {
     myBooks(bookOwner: $bookOwner) {
       _id
       authors
