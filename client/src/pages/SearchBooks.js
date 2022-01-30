@@ -15,12 +15,12 @@ const SearchBooks = () => {
 
   // create state to hold saved bookId values
   
-  const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
+  // const { loading: loadingMe, data: dataMe } = useQuery(QUERY_ME);
   // const myBooks = dataMe?.me || {};
   // const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
   // console.log(myBooks)
  
-
+console.log(Auth.getProfile().data.username)
 
   const [ addBook, {data, loading, error} ] = useMutation(ADD_BOOK);
 
@@ -54,6 +54,7 @@ const SearchBooks = () => {
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
+        bookOwner: Auth.getProfile().data._id,
       }));
 
       setSearchedBooks(bookData);
@@ -81,7 +82,6 @@ const SearchBooks = () => {
         {
           variables: {
             ...bookToSave,
-            bookOwner: Auth.getProfile().data.username,
 
           }
         }

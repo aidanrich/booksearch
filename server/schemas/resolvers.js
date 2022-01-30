@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Books, Book } = require('../models');
+const { User, Book } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -72,8 +72,8 @@ const resolvers = {
     //   throw new AuthenticationError('You need to be logged in!');
     // },
 
-    addBook: async (parent, { bookId, authors, description, image, link, title, bookOwner }) => {
-      const book = await Book.create({ bookId, authors, description, image, link, title, bookOwner });
+    addBook: async (parent, { bookId, authors, description, image, title, bookOwner }) => {
+      const book = await Book.create({ bookId, authors, description, image, title, bookOwner });
       return book;
     },
 
