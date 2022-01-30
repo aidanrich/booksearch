@@ -86,13 +86,26 @@ const resolvers = {
     },
 
     // Make it so a logged in user can only remove a skill from their own profile
+
+    // OLD DELETE BOOK CODE
+
+    // removeBook: async (parent, { bookId }, context) => {
+    //   if (context.user) {
+    //     const updateBook = await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $pull: { savedBooks: {bookId} } },
+    //       { new: true }
+    //     );
+    //     return updateBook 
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        const updateBook = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { savedBooks: {bookId} } },
-          { new: true }
-        );
+        const updateBook = await Book.findOneAndDelete({
+          _id: bookId
+        });
         return updateBook 
       }
       throw new AuthenticationError('You need to be logged in!');

@@ -62,9 +62,9 @@ const SavedBooks = () => {
       </Jumbotron>
       <Container>
         <h2>
-          {/* {bookMap.savedBooks.length
-            ? `Viewing  ${bookMap.savedBooks.length} saved ${bookMap.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You have no saved books!'} */}
+          {bookMap
+            ? `Viewing  ${Auth.getProfile().data.username}'s saved ${bookMap.length === 1 ? 'book' : 'books'}:`
+            : 'You have no saved books!'}
         </h2>
         <CardColumns>
           {!loading && bookMap.map((book) => {
