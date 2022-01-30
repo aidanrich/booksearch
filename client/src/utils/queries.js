@@ -18,7 +18,6 @@ export const QUERY_MYBOOKS = gql`
       description
       bookId
       image
-      link
       title
       bookOwner
       owned

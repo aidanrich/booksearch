@@ -14,7 +14,7 @@ const resolvers = {
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
 
     myBooks: async (parent, {bookOwner}) => {
-      return await Book.findById({bookOwner: bookOwner });
+      return await Book.find({bookOwner: bookOwner });
     },
 
     // me: async (parent, args, context) => {
