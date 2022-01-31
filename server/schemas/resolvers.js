@@ -101,10 +101,10 @@ const resolvers = {
     //   throw new AuthenticationError('You need to be logged in!');
     // },
 
-    removeBook: async (parent, { bookId }, context) => {
+    removeBook: async (parent, { myBook }, context) => {
       if (context.user) {
         const updateBook = await Book.findOneAndDelete({
-          _id: bookId
+          _id: myBook
         });
         return updateBook 
       }

@@ -39,9 +39,8 @@ export const ADD_BOOK = gql`
 `;
 
 export const REMOVE_BOOK = gql`
-mutation removeBook( $bookId: ID! ){
-        removeBook( bookId: $bookId ){
-            savedBooks{
+mutation removeBook( $myBook: ID! ){
+        removeBook( myBook: $myBook ){
                 _id
                 authors
                 description
@@ -49,7 +48,6 @@ mutation removeBook( $bookId: ID! ){
                 bookId
                 image
                 bookOwner
-            }
         }
     }
 `;

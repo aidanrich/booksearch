@@ -9,18 +9,18 @@ import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
 
-  const { loading, data } = useQuery(QUERY_MYBOOKS, {
+  const { loading, data: bookData } = useQuery(QUERY_MYBOOKS, {
     variables: {bookOwner: Auth.getProfile().data._id}
   });
-  console.log(data)
-  const bookMap = data?.myBooks || {};
+  console.log(bookData)
+  const bookMap = bookData?.myBooks || {};
   // const { loading, data } = useQuery(QUERY_ME);
   // const bookMap = data?.me || {};
 
-  const [removeBook, {error}] = useMutation(REMOVE_BOOK);
+  const [removeBook, {data: deleteData, error}] = useMutation(REMOVE_BOOK);
 
-  const [userData, setData] = useState(loading ? null : data.me);
-
+  const [userData, setData] = useState(loading ? null : bookData);
+  console.log(userData)
   // use this to determine if `useEffect()` hook needs to run again
   // const userDataLength = Object.keys(userData).length;
 
@@ -29,23 +29,22 @@ const SavedBooks = () => {
   // }
 
 
-  const handleDeleteBook = async (bookId) => {
+  const handleDeleteBook = async (myBook) => {
     try {
-      const data = await removeBook({
-       variables: {bookId},
+      const { deleteData } = await removeBook({
+       variables: {myBook},
      });
 
      // update state of books:
      setData(()=>{
        return{
          ...userData,
-         savedBooks: data.data.removeBook.savedBooks
        }
      })
    } catch (err) {
      console.error(err);
    }
-   removeBookId(bookId);
+   removeBookId(myBook);
   };
 
   // if data isn't here yet, say so
@@ -75,7 +74,7 @@ const SavedBooks = () => {
                   <Card.Title>{book.title}</Card.Title>
                   <p className='small'>Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
-                  <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
+                  <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book._id)}>
                     Delete this Book!
                   </Button>
                 </Card.Body>
