@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 import { useQuery, useMutation } from '@apollo/client';
 import { ADD_BOOK } from '../utils/mutations';
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_MYBOOKS } from '../utils/queries';
 import Auth from '../utils/auth';
 import { saveBook, searchGoogleBooks } from '../utils/API';
 // import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
@@ -22,7 +22,24 @@ const SearchBooks = () => {
  
 console.log(Auth.getProfile().data.username)
 
-  const [ addBook, {data, loading, error} ] = useMutation(ADD_BOOK);
+  const [ addBook, {data, loading, error} ] = useMutation(ADD_BOOK, {
+
+    update(cache, { data: { addBook } }) {
+      try {
+
+        const { savedBooks } = cache.readQuery({ query: QUERY_MYBOOKS, 
+          variables: {bookOwner: Auth.getProfile().data._id}
+       });
+
+        cache.writeQuery({
+          query: QUERY_MYBOOKS,
+          data: { savedBooks: [...savedBooks, addBook] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -32,7 +49,7 @@ console.log(Auth.getProfile().data.username)
   // });
 
   // create method to search for books and set state on form submit
-  const handleFormSubmit = async (event) => {
+  async function handleFormSubmit(event) {
     event.preventDefault();
 
     if (!searchInput) {
@@ -63,7 +80,7 @@ console.log(Auth.getProfile().data.username)
       console.error(err);
     }
 
-  };
+  }
 
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
